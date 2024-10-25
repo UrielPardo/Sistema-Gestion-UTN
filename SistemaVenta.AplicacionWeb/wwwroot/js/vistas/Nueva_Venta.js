@@ -123,7 +123,7 @@ $("#cboBuscarProducto").on("select2:select", function (e) {
         type:"input",
         showCancelButton: true,
         closeOnConfirm: false,
-        inputPlaceholder: "Ingrese Canitdad"
+        inputPlaceholder: "Ingrese Cantidad"
     },
         function (valor) {
 
@@ -209,9 +209,22 @@ $(document).on("click", "button.btn-eliminar", function () {
 
 $("#btnTerminarVenta").click(function () {
 
+    const documentoCliente = $("#txtDocumentoCliente").val().trim();
+    const nombreCliente = $("#txtNombreCliente").val().trim();
+
+    if (documentoCliente === "") {
+        toastr.warning("", "El número de documento es obligatorio.");
+        return; // Salir si el campo está vacío
+    }
+
+    if (nombreCliente === "") {
+        toastr.warning("", "El nombre completo es obligatorio.");
+        return; // Salir si el campo está vacío
+    }
+
     if (ProductosParaVenta.length < 1) {
-        toastr.warning("", "Debe ingresar productos")
-        return;
+        toastr.warning("", "Debe ingresar productos");
+        return; // Salir si no hay productos
     }
 
     const vmDetalleVenta = ProductosParaVenta;
