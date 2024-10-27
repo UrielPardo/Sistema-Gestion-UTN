@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6+eF4g4nwtc=",
+  "dgSpecHash": "QKS+D/rE0wE=",
   "success": true,
   "projectFilePath": "C:\\Users\\USR\\Desktop\\SolucionSistemaVenta\\SistemaVenta.AplicacionWeb\\SistemaVenta.AplicacionWeb.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\USR\\.nuget\\packages\\firebaseauthentication.net\\3.7.2\\firebaseauthentication.net.3.7.2.nupkg.sha512",
     "C:\\Users\\USR\\.nuget\\packages\\firebasestorage.net\\1.0.3\\firebasestorage.net.1.0.3.nupkg.sha512",
     "C:\\Users\\USR\\.nuget\\packages\\humanizer.core\\2.2.0\\humanizer.core.2.2.0.nupkg.sha512",
+    "C:\\Users\\USR\\.nuget\\packages\\mercadopago-sdk\\2.4.1\\mercadopago-sdk.2.4.1.nupkg.sha512",
     "C:\\Users\\USR\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\USR\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\USR\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",
