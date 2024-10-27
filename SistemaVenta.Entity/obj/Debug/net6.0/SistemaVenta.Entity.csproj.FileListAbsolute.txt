@@ -39,3 +39,4 @@ C:\Users\USR\Desktop\SolucionSistemaVenta\SistemaVenta.Entity\obj\Debug\net6.0\r
 C:\Users\USR\Desktop\SolucionSistemaVenta\SistemaVenta.Entity\obj\Debug\net6.0\SistemaVenta.Entity.pdb
 C:\Users\USR\Desktop\SolucionSistemaVenta\SistemaVenta.Entity\obj\Debug\net6.0\SistemaVenta.Entity.genruntimeconfig.cache
 C:\Users\USR\Desktop\SolucionSistemaVenta\SistemaVenta.Entity\obj\Debug\net6.0\ref\SistemaVenta.Entity.dll
+C:\Users\USR\Desktop\SolucionSistemaVenta\SistemaVenta.Entity\obj\Debug\net6.0\SistemaVenta.Entity.sourcelink.json

@@ -123,14 +123,14 @@ $("#cboBuscarProducto").on("select2:select", function (e) {
         type:"input",
         showCancelButton: true,
         closeOnConfirm: false,
-        inputPlaceholder: "Ingrese Canitdad"
+        inputPlaceholder: "Ingrese Cantidad"
     },
         function (valor) {
 
             if (valor === false) return false;
 
             if (valor === "") {
-                toastr.warning("", "Necesita ingresar la cantidad")
+                toastr.warning("", "Debe ingresar la cantidad")
                 return false;
             }
             if (isNaN(parseInt(valor))) {
@@ -209,9 +209,23 @@ $(document).on("click", "button.btn-eliminar", function () {
 
 $("#btnTerminarVenta").click(function () {
 
+    // Validar que los campos de cliente estén llenos
+    const documentoCliente = $("#txtDocumentoCliente").val().trim();
+    const nombreCliente = $("#txtNombreCliente").val().trim();
+
+    if (documentoCliente === "") {
+        toastr.warning("", "El campo Documento es obligatorio.");
+        return; // Salir si el campo está vacío
+    }
+
+    if (nombreCliente === "") {
+        toastr.warning("", "El campo Nombre completo es obligatorio.");
+        return; // Salir si el campo está vacío
+    }
+
     if (ProductosParaVenta.length < 1) {
-        toastr.warning("", "Debe ingresar productos")
-        return;
+        toastr.warning("", "Debe ingresar productos");
+        return; // Salir si no hay productos
     }
 
     const vmDetalleVenta = ProductosParaVenta;

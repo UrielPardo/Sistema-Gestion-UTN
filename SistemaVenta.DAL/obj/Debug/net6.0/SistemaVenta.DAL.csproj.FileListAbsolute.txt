@@ -43,3 +43,4 @@ C:\Users\USR\Desktop\SolucionSistemaVenta\SistemaVenta.DAL\obj\Debug\net6.0\Sist
 C:\Users\USR\Desktop\SolucionSistemaVenta\SistemaVenta.DAL\obj\Debug\net6.0\refint\SistemaVenta.DAL.dll
 C:\Users\USR\Desktop\SolucionSistemaVenta\SistemaVenta.DAL\obj\Debug\net6.0\SistemaVenta.DAL.pdb
 C:\Users\USR\Desktop\SolucionSistemaVenta\SistemaVenta.DAL\obj\Debug\net6.0\ref\SistemaVenta.DAL.dll
+C:\Users\USR\Desktop\SolucionSistemaVenta\SistemaVenta.DAL\obj\Debug\net6.0\SistemaVenta.DAL.sourcelink.json

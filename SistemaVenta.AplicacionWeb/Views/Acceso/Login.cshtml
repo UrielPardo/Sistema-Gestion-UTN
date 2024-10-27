@@ -47,10 +47,10 @@
                                     </div>
                                     <form class="user" asp-controller="Acceso" asp-action="Login" method="post">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" placeholder="Correo" asp-for="Correo">
+                                            <input type="email" class="form-control form-control-user" placeholder="Correo" asp-for="Correo" required>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" placeholder="Contraseña" asp-for="Clave">
+                                            <input type="password" class="form-control form-control-user" placeholder="Contraseña" asp-for="Clave" required>
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -67,7 +67,7 @@
                                                 </div>
                                             </div>
                                         }
-                                        
+                                                                                
                                        <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Ingresar 
                                         </button>
