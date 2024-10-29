@@ -15,7 +15,8 @@
           "SistemaVenta.BLL": "1.0.0",
           "SistemaVenta.Entity": "1.0.0",
           "SistemaVenta.IOC": "1.0.0",
-          "Swashbuckle.AspNetCore": "6.3.0"
+          "Swashbuckle.AspNetCore": "6.3.0",
+          "mercadopago-sdk": "2.4.1"
         },
         "runtime": {
           "SistemaVenta.AplicacionWeb.dll": {}
@@ -93,6 +94,18 @@
           "lib/netstandard1.0/Humanizer.dll": {
             "assemblyVersion": "2.2.0.0",
             "fileVersion": "2.2.0.0"
+          }
+        }
+      },
+      "mercadopago-sdk/2.4.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
+          "System.Configuration.ConfigurationManager": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/MercadoPago.dll": {
+            "assemblyVersion": "2.4.1.0",
+            "fileVersion": "2.4.1.0"
           }
         }
       },
@@ -2328,7 +2341,8 @@
           "FirebaseAuthentication.net": "3.7.2",
           "FirebaseStorage.net": "1.0.3",
           "SistemaVenta.DAL": "1.0.0",
-          "SistemaVenta.Entity": "1.0.0"
+          "SistemaVenta.Entity": "1.0.0",
+          "mercadopago-sdk": "2.4.1"
         },
         "runtime": {
           "SistemaVenta.BLL.dll": {
@@ -2420,6 +2434,13 @@
       "sha512": "sha512-rsYXB7+iUPP8AHgQ8JP2UZI2xK2KhjcdGr9E6zX3CsZaTLCaw8M35vaAJRo1rfxeaZEVMuXeaquLVCkZ7JcZ5Q==",
       "path": "humanizer.core/2.2.0",
       "hashPath": "humanizer.core.2.2.0.nupkg.sha512"
+    },
+    "mercadopago-sdk/2.4.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ewCzveC9kqjUuFAZbtAZL/9PS+4wGjfzH6/zEyXqr4WR16M9CmJn0KFulSY0mtAl3yq7E6wfllZjij6apA6yYQ==",
+      "path": "mercadopago-sdk/2.4.1",
+      "hashPath": "mercadopago-sdk.2.4.1.nupkg.sha512"
     },
     "MessagePack/2.1.152": {
       "type": "package",

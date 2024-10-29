@@ -91,6 +91,23 @@
           "lib/netstandard1.0/Humanizer.dll": {}
         }
       },
+      "mercadopago-sdk/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
+          "System.Configuration.ConfigurationManager": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/MercadoPago.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/MercadoPago.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "MessagePack/2.1.152": {
         "type": "package",
         "dependencies": {
@@ -3617,7 +3634,8 @@
           "FirebaseAuthentication.net": "3.7.2",
           "FirebaseStorage.net": "1.0.3",
           "SistemaVenta.DAL": "1.0.0",
-          "SistemaVenta.Entity": "1.0.0"
+          "SistemaVenta.Entity": "1.0.0",
+          "mercadopago-sdk": "2.4.1"
         },
         "compile": {
           "bin/placeholder/SistemaVenta.BLL.dll": {}
@@ -3746,6 +3764,23 @@
         "humanizer.core.2.2.0.nupkg.sha512",
         "humanizer.core.nuspec",
         "lib/netstandard1.0/Humanizer.dll"
+      ]
+    },
+    "mercadopago-sdk/2.4.1": {
+      "sha512": "ewCzveC9kqjUuFAZbtAZL/9PS+4wGjfzH6/zEyXqr4WR16M9CmJn0KFulSY0mtAl3yq7E6wfllZjij6apA6yYQ==",
+      "type": "package",
+      "path": "mercadopago-sdk/2.4.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net6.0/MercadoPago.dll",
+        "lib/net6.0/MercadoPago.pdb",
+        "lib/net6.0/MercadoPago.xml",
+        "lib/netstandard2.1/MercadoPago.dll",
+        "lib/netstandard2.1/MercadoPago.pdb",
+        "lib/netstandard2.1/MercadoPago.xml",
+        "mercadopago-sdk.2.4.1.nupkg.sha512",
+        "mercadopago-sdk.nuspec"
       ]
     },
     "MessagePack/2.1.152": {
@@ -10244,7 +10279,8 @@
       "SistemaVenta.BLL >= 1.0.0",
       "SistemaVenta.Entity >= 1.0.0",
       "SistemaVenta.IOC >= 1.0.0",
-      "Swashbuckle.AspNetCore >= 6.3.0"
+      "Swashbuckle.AspNetCore >= 6.3.0",
+      "mercadopago-sdk >= 2.4.1"
     ]
   },
   "packageFolders": {
@@ -10321,6 +10357,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.3.0, )"
+          },
+          "mercadopago-sdk": {
+            "target": "Package",
+            "version": "[2.4.1, )"
           }
         },
         "imports": [
