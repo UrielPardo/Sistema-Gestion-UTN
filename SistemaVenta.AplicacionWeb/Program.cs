@@ -8,6 +8,7 @@ using DinkToPdf;
 using DinkToPdf.Contracts;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
+using SistemaVenta.BLL.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,20 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.InyectarDependencia(builder.Configuration);
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+// Configurar HttpClient para MercadoPagoService
+builder.Services.AddHttpClient<IMercadoPagoService, MercadoPagoService>((serviceProvider, httpClient) =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var accessToken = configuration["MercadoPagoConfig:AccessToken"];
+
+    httpClient.BaseAddress = new Uri("https://api.mercadopago.com/v1/");
+    httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+    httpClient.DefaultRequestHeaders.Add("User-Agent", "MercadoPagoApp");
+
+    // Añadir el token de acceso a los headers de autorización si es necesario
+    // httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+});
 
 var context = new CustomAssemblyLoadContext();
 context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "Utilidades/LibreriaPDF/libwkhtmltox.dll"));

@@ -12,6 +12,9 @@ using SistemaVenta.DAL.Interfaces;
 using SistemaVenta.DAL.Implementacion;
 using SistemaVenta.BLL.Interfaces;
 using SistemaVenta.BLL.Implementacion;
+using MercadoPago.Client.CardToken;
+using MercadoPago.Client.Customer;
+using MercadoPago.Client.Payment;
 
 namespace SistemaVenta.IOC
 {
@@ -47,7 +50,13 @@ namespace SistemaVenta.IOC
 
             services.AddScoped<IDashBoardService, DashBoardService>();
             services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IMercadoPagoService, MercadoPagoService>();
 
+            // Registro de servicios de MercadoPago
+            services.AddScoped<CardTokenClient>();
+            services.AddScoped<CustomerClient>();
+            services.AddScoped<PaymentClient>();
+            
         }
     }
 }

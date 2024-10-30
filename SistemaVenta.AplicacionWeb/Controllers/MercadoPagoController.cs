@@ -1,43 +1,65 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
-[ApiController]
-[Route("api/[controller]")]
-public class PaymentController : ControllerBase
+public class MercadoPagoController : Controller
 {
     private readonly MercadoPagoService _mercadoPagoService;
 
-    public PaymentController(MercadoPagoService mercadoPagoService)
+    public MercadoPagoController(MercadoPagoService mercadoPagoService)
     {
         _mercadoPagoService = mercadoPagoService;
     }
 
-    [HttpPost("create_payment")]
-    public async Task<IActionResult> CreatePayment([FromBody] PaymentRequest paymentRequest)
+    [HttpGet("customerFind")]
+    public async Task<IActionResult> GetCustomerId([FromQuery] string email)
     {
         try
         {
-            var payment = await _mercadoPagoService.CreatePaymentAsync(
-                paymentRequest.Amount,
-                paymentRequest.Description,
-                paymentRequest.Token,
-                paymentRequest.Email
-            );
+            var customerId = await _mercadoPagoService.GetCustomerIdByEmailAsync(email);
+
+            if (customerId != null)
+            {
+                return Ok(customerId);
+            }
+            else
+            {
+                return NotFound($"No se encontró el customer_id para el email: {email}");
+            }
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error al obtener el customer_id: {ex.Message}");
+        }
+    }
+
+    [HttpPost("create")]
+    public async Task<IActionResult> CreatePayment([FromForm] decimal amount, [FromForm] string description, [FromForm] string cardNumber, [FromForm] int expirationMonth, [FromForm] int expirationYear, [FromForm] string cardholderName, [FromForm] string securityCode, [FromForm] string email)
+    {
+        try
+        {
+            // Generar el cardToken
+            var cardToken = await _mercadoPagoService.GenerateCardTokenAsync(cardNumber, expirationMonth, expirationYear, cardholderName, securityCode);
+
+            // Obtener el customerId del email proporcionado
+            var customerId = await _mercadoPagoService.GetCustomerIdByEmailAsync(email);
+
+            if (customerId == null)
+            {
+                // Si no se encuentra el customerId, crear un nuevo cliente en MercadoPago
+                customerId = await _mercadoPagoService.CreateCustomerAsync(email);
+            }
+
+            // Asociar la tarjeta al cliente (opcional, dependiendo de la lógica de tu aplicación)
+            // var cardId = await _mercadoPagoService.CreateCardAsync(customerId, cardToken);
+
+            // Crear el pago utilizando los datos del formulario y el cardToken generado
+            var payment = await _mercadoPagoService.CreatePaymentAsync(amount, description, customerId, cardToken, securityCode, email);
 
             return Ok(payment);
         }
         catch (Exception ex)
         {
-            return BadRequest(new { message = ex.Message });
+            return StatusCode(500, $"Error al procesar el pago: {ex.Message}");
         }
-    }
-}
-
-public class PaymentRequest
-{
-    public decimal Amount { get; set; }
-    public string Description { get; set; }
-    public string Token { get; set; }
-    public string Email { get; set; }
+    }  
 }

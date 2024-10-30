@@ -267,7 +267,62 @@ $("#btnTerminarVenta").click(function () {
 
 })
 
+document.getElementById("checkout-btn").addEventListener("click", async function () {
+    // Capturar los valores de los inputs
+    //const amount = document.getElementById("amount").value;
+    const amount = document.getElementById("amount").value;
+    const description = document.getElementById("description").value;
+    const cardNumber = document.getElementById("cardNumber").value;
+    const cardholderName = document.getElementById("cardholderName").value;
+    const expirationMonth = parseInt(document.getElementById("expirationMonth").value, 10);
+    const expirationYear = parseInt(document.getElementById("expirationYear").value, 10);
+    const securityCode = document.getElementById("securityCode").value;
+    const email = document.getElementById("email").value;
 
+    // Validar que los campos necesarios no estén vacíos
+    if (!amount || !description || !cardNumber || !expirationMonth || !expirationYear || !securityCode || !email) {
+        alert("Por favor, completa todos los campos requeridos.");
+        return;
+    }
+
+    
+
+    // Enviar los datos al controlador mediante una solicitud fetch
+    try {
+        const response = await fetch("/Payment/CreatePayment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                amount,
+                description,
+                cardNumber,
+                
+                expirationMonth,
+                expirationYear,
+                
+                cardholderName,
+                securityCode,
+                email
+            })
+        });
+
+        // Manejar la respuesta del servidor
+        if (response.ok) {
+            const result = await response.json();
+            alert("Pago realizado con éxito.");
+            console.log("Respuesta del pago:", result);
+        } else {
+            const errorMessage = await response.text();
+            alert(`Error en el pago: ${errorMessage}`);
+        }
+    } catch (error) {
+        alert(`Error al conectar con el servidor: ${error}`);
+    }
+});
+
+   /*
     // Inicializar Mercado Pago
 // Inicializa el SDK de Mercado Pago
 const mp = new MercadoPago('APP_USR-c8b4a37d-ae62-46a6-b936-bb90e0377fdf', {
@@ -327,4 +382,4 @@ document.getElementById("checkout-btn").addEventListener("click", async function
     } catch (error) {
         alert("Error al procesar el pago: " + error.message);
     }
-});
+});*/
