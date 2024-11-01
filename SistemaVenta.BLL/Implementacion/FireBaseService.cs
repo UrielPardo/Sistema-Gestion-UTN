@@ -29,9 +29,7 @@ namespace SistemaVenta.BLL.Implementacion
             {
                 IQueryable<Configuracion> query = await _repositorio.Consultar(c => c.Recurso.Equals("FireBase_Storage"));
 
-                Dictionary<string, string> Config = query.ToDictionary(
-                    keySelector: c => c.Propiedad,
-                    elementSelector: c => c.Valor);
+                Dictionary<string, string> Config = query.ToDictionary(keySelector: c => c.Propiedad, elementSelector: c => c.Valor);
 
 
                 var auth = new FirebaseAuthProvider(new FirebaseConfig(Config["api_key"]));

@@ -1,18 +1,1 @@
-[
-  {
-    "ContainingType": "PaymentController",
-    "Method": "CreatePayment",
-    "RelativePath": "api/Payment/create_payment",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "paymentRequest",
-        "Type": "PaymentRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  }
-]
+[]
