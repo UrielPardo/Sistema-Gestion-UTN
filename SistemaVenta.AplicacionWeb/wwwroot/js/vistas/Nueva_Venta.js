@@ -79,7 +79,6 @@ $(document).ready(function () {
 
 function formatoResultados(data) {
 
-    //esto es por defecto, ya que muestra el "buscando..."
     if (data.loading)
         return data.text;
 
@@ -213,17 +212,17 @@ $("#btnTerminarVenta").click(function () {
 
     if (documentoCliente === "") {
         toastr.warning("", "El número de documento es obligatorio.");
-        return; // Salir si el campo está vacío
+        return;
     }
 
     if (nombreCliente === "") {
         toastr.warning("", "El nombre completo es obligatorio.");
-        return; // Salir si el campo está vacío
+        return;
     }
 
     if (ProductosParaVenta.length < 1) {
         toastr.warning("", "Debe ingresar productos");
-        return; // Salir si no hay productos
+        return;
     }
 
     const vmDetalleVenta = ProductosParaVenta;
@@ -268,8 +267,6 @@ $("#btnTerminarVenta").click(function () {
 })
 
 document.getElementById("checkout-btn").addEventListener("click", async function () {
-    // Capturar los valores de los inputs
-    //const amount = document.getElementById("amount").value;
     const amount = document.getElementById("amount").value;
     const description = document.getElementById("description").value;
     const cardNumber = document.getElementById("cardNumber").value;
@@ -322,64 +319,21 @@ document.getElementById("checkout-btn").addEventListener("click", async function
     }
 });
 
-   /*
-    // Inicializar Mercado Pago
-// Inicializa el SDK de Mercado Pago
-const mp = new MercadoPago('APP_USR-c8b4a37d-ae62-46a6-b936-bb90e0377fdf', {
-    locale: 'es-AR' // Cambia según tu localización
+document.addEventListener("DOMContentLoaded", function () {
+    // Elementos de la pantalla
+    const nombreClienteInput = document.getElementById("txtNombreCliente");
+    const totalInput = document.getElementById("txtTotal");
+
+    // Elementos del modal
+    const modalAmountInput = document.getElementById("amount");
+    const modalDescriptionInput = document.getElementById("description");
+    const modalCardholderNameInput = document.getElementById("cardholderName");
+
+    // Escucha el evento para abrir el modal
+    $('#paymentModal').on('show.bs.modal', function () {
+        // Asigna el nombre del cliente y el total del monto al modal
+        modalCardholderNameInput.value = nombreClienteInput.value;
+        modalAmountInput.value = totalInput.value;
+        modalDescriptionInput.value = "Venta por MercadoPago";
+    });
 });
-
-document.getElementById("checkout-btn").addEventListener("click", async function () {
-    const amount = document.getElementById("amount").value;
-    const description = document.getElementById("description").value;
-    const email = document.getElementById("email").value;
-    const cardNumber = document.getElementById("cardNumber").value;
-    const expirationMonth = document.getElementById("expirationMonth").value;
-    const expirationYear = document.getElementById("expirationYear").value;
-    const securityCode = document.getElementById("securityCode").value;
-
-    // Crear el token de la tarjeta
-    const cardData = {
-        cardNumber: cardNumber,
-        cardExpirationMonth: expirationMonth,
-        cardExpirationYear: expirationYear,
-        securityCode: securityCode,
-        cardholderName: "Nombre del Titular", // Cambia según tu lógica
-        identification: {
-            type: "DNI", // Cambia según tu lógica
-            number: "12345678" // Cambia según tu lógica
-        }
-    };
-
-    try {
-        const tokenResponse = await mp.createToken(cardData);
-        const token = tokenResponse.id;
-
-        // Enviar el pago al backend
-        const paymentData = {
-            amount: parseFloat(amount),
-            description: description,
-            token: token,
-            email: email
-        };
-
-        const response = await fetch("http://localhost:5000/api/payment/create_payment", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(paymentData),
-        });
-
-        if (!response.ok) {
-            throw new Error("Error en la creación del pago");
-        }
-
-        const paymentResponse = await response.json();
-        console.log("Pago realizado con éxito:", paymentResponse);
-        alert("Pago realizado con éxito!");
-
-    } catch (error) {
-        alert("Error al procesar el pago: " + error.message);
-    }
-});*/
