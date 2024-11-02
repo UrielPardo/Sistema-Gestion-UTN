@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace SistemaVenta.AplicacionWeb.Controllers
 {
 
-    //[Authorize]
     public class ProductoController : Controller
     {
         private readonly IMapper _mapper;
@@ -24,7 +23,14 @@ namespace SistemaVenta.AplicacionWeb.Controllers
             _productoServicio = productoServicio;
 
         }
+
+        [Authorize]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Inicio()
         {
             return View();
         }

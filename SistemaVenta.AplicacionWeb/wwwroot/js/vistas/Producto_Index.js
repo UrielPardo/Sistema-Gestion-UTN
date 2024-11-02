@@ -115,8 +115,6 @@ $("#btnNuevo").click(function () {
     mostrarModal()
 })
 
-
-
 $("#btnGuardar").click(function () {
 
     const inputs = $("input.input-validar").serializeArray();
@@ -267,5 +265,5 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
         }
     )
 
-
+    
 })

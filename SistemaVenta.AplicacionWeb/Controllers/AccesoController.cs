@@ -25,7 +25,7 @@ namespace SistemaVenta.AplicacionWeb.Controllers
             ClaimsPrincipal claimUser = HttpContext.User;
 
             if (claimUser.Identity.IsAuthenticated) {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "DashBoard");
             }
             return View();
         }
@@ -69,7 +69,7 @@ namespace SistemaVenta.AplicacionWeb.Controllers
                 properties
                 );
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "DashBoard");
         }
 
         [HttpPost]
