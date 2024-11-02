@@ -207,63 +207,7 @@ $(document).on("click", "button.btn-eliminar", function () {
 
 $("#btnTerminarVenta").click(function () {
 
-    const documentoCliente = $("#txtDocumentoCliente").val().trim();
-    const nombreCliente = $("#txtNombreCliente").val().trim();
-
-    if (documentoCliente === "") {
-        toastr.warning("", "El número de documento es obligatorio.");
-        return;
-    }
-
-    if (nombreCliente === "") {
-        toastr.warning("", "El nombre completo es obligatorio.");
-        return;
-    }
-
-    if (ProductosParaVenta.length < 1) {
-        toastr.warning("", "Debe ingresar productos");
-        return;
-    }
-
-    const vmDetalleVenta = ProductosParaVenta;
-
-    const venta = {
-        idTipoDocumentoVenta: $("#cboTipoDocumentoVenta").val(),
-        documentoCliente: $("#txtDocumentoCliente").val(),
-        nombreCliente: $("#txtNombreCliente").val(),
-        subTotal: $("#txtSubTotal").val(),
-        impuestoTotal: $("#txtIGV").val(),
-        total: $("#txtTotal").val(),
-        DetalleVenta : vmDetalleVenta
-    }
-
-    $("#btnTerminarVenta").LoadingOverlay("show");
-
-    fetch("/Venta/RegistrarVenta", {
-        method: "POST",
-        headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify(venta)
-    })
-        .then(response => {
-            $("#btnTerminarVenta").LoadingOverlay("hide");
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-
-            if (responseJson.estado) {
-                ProductosParaVenta = [];
-                mostrarProducto_Precios();
-
-                $("#txtDocumentoCliente").val("")
-                $("#txtNombreCliente").val("")
-                $("#cboTipoDocumentoVenta").val($("#cboTipoDocumentoVenta option:first").val())
-
-                swal("Registrado!", `Numero Venta : ${responseJson.objeto.numeroVenta}`, "success")
-            } else {
-                swal("Lo sentimos!", "No se pudo registrar la venta", "error")
-            }
-        })
-
+    terminarVenta();
 })
 
 document.getElementById("checkout-btn").addEventListener("click", async function () {
@@ -308,32 +252,97 @@ document.getElementById("checkout-btn").addEventListener("click", async function
         // Manejar la respuesta del servidor
         if (response.ok) {
             const result = await response.json();
-            alert("Pago realizado con éxito.");
+            swal("Registrado!", "Pago realizado con éxito." , "success");
             console.log("Respuesta del pago:", result);
+            terminarVenta();
+
         } else {
             const errorMessage = await response.text();
-            alert(`Error en el pago: ${errorMessage}`);
+            swal("Lo sentimos!", `Error en el pago: ${errorMessage}`, "error");
         }
     } catch (error) {
-        alert(`Error al conectar con el servidor: ${error}`);
+        swal("Lo sentimos!", `Error al conectar con el servidor: ${error}`, "error");
     }
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Elementos de la pantalla
     const nombreClienteInput = document.getElementById("txtNombreCliente");
     const totalInput = document.getElementById("txtTotal");
 
-    // Elementos del modal
     const modalAmountInput = document.getElementById("amount");
     const modalDescriptionInput = document.getElementById("description");
     const modalCardholderNameInput = document.getElementById("cardholderName");
 
-    // Escucha el evento para abrir el modal
     $('#paymentModal').on('show.bs.modal', function () {
-        // Asigna el nombre del cliente y el total del monto al modal
         modalCardholderNameInput.value = nombreClienteInput.value;
         modalAmountInput.value = totalInput.value;
         modalDescriptionInput.value = "Venta por MercadoPago";
     });
 });
+
+
+function terminarVenta() {
+    const documentoCliente = $("#txtDocumentoCliente").val().trim();
+    const nombreCliente = $("#txtNombreCliente").val().trim();
+
+    if (documentoCliente === "") {
+        toastr.warning("", "El número de documento es obligatorio.");
+        return;
+    }
+
+    if (nombreCliente === "") {
+        toastr.warning("", "El nombre completo es obligatorio.");
+        return;
+    }
+
+    if (ProductosParaVenta.length < 1) {
+        toastr.warning("", "Debe ingresar productos");
+        return;
+    }
+
+    const vmDetalleVenta = ProductosParaVenta;
+
+    const venta = {
+        idTipoDocumentoVenta: $("#cboTipoDocumentoVenta").val(),
+        documentoCliente: documentoCliente,
+        nombreCliente: nombreCliente,
+        subTotal: $("#txtSubTotal").val(),
+        impuestoTotal: $("#txtIGV").val(),
+        total: $("#txtTotal").val(),
+        DetalleVenta: vmDetalleVenta
+    };
+
+    $("#btnTerminarVenta").LoadingOverlay("show");
+
+    fetch("/Venta/RegistrarVenta", {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify(venta)
+    })
+        .then(response => {
+            $("#btnTerminarVenta").LoadingOverlay("hide");
+            return response.ok ? response.json() : Promise.reject(response);
+        })
+        .then(responseJson => {
+            if (responseJson.estado) {
+                ProductosParaVenta = [];
+                mostrarProducto_Precios();
+
+                $("#txtDocumentoCliente").val("");
+                $("#txtNombreCliente").val("");
+                $("#cboTipoDocumentoVenta").val($("#cboTipoDocumentoVenta option:first").val());
+
+                swal("Registrado!", `Numero Venta : ${responseJson.objeto.numeroVenta}`, "success");
+                $("#paymentModal").modal("hide")
+            } else {
+                swal("Lo sentimos!", "No se pudo registrar la venta", "error");
+                $("#paymentModal").modal("hide")
+            }
+        })
+        .catch(error => {
+            $("#btnTerminarVenta").LoadingOverlay("hide");
+            console.error("Error al registrar la venta:", error);
+            swal("Error", "Hubo un problema al procesar la venta", "error");
+            $("#paymentModal").modal("hide")
+        });
+}
