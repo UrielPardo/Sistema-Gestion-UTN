@@ -139,7 +139,7 @@ namespace SistemaVenta.AplicacionWeb.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return RedirectToAction("Login", "Acceso");
+            return RedirectToAction("Inicio", "Producto");
         }
     }
 }
