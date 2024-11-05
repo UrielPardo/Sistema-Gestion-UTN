@@ -144,7 +144,6 @@ $("#cboBuscarProducto").on("select2:select", function (e) {
                 cantidad: parseInt(valor),
                 precio: data.precio.toString(),
                 total: (parseFloat(valor) * data.precio).toString()
-
             }
 
             ProductosParaVenta.push(producto)
@@ -223,18 +222,18 @@ document.getElementById("checkout-btn").addEventListener("click", async function
 
     // Validar que los campos necesarios no estén vacíos
     if (!amount || !description || !cardNumber || !expirationMonth || !expirationYear || !securityCode || !email) {
-        alert("Por favor, completa todos los campos requeridos.");
+        toastr.warning("", "Por favor, completa todos los campos requeridos.");
         return;
     }
 
     // Validar que el año de expiración tenga 4 dígitos
     if (expirationYear.toString().length !== 4) {
-        alert("El año de expiración debe tener formato de 4 dígitos.");
+        toastr.warning("", "El año de expiración debe tener formato de 4 dígitos.");
         return;
     }
     
+    $("#paymentModal").LoadingOverlay("show");
 
-    // Enviar los datos al controlador mediante una solicitud fetch
     try {
         const response = await fetch("/Payment/CreatePayment", {
             method: "POST",
@@ -246,22 +245,18 @@ document.getElementById("checkout-btn").addEventListener("click", async function
                 description,
                 cardNumber,
                 cardType,
-                
                 expirationMonth,
                 expirationYear,
-                
                 cardholderName,
                 securityCode,
                 email
             })
         });
 
-        // Manejar la respuesta del servidor
         if (response.ok) {
             const result = await response.json();
             swal("Registrado!", "Pago realizado con éxito." , "success");
-            console.log("Respuesta del pago:", result);
-            terminarVenta();
+            await terminarVenta(cardType, cardNumber, description);
 
         } else {
             const errorMessage = await response.text();
@@ -269,6 +264,9 @@ document.getElementById("checkout-btn").addEventListener("click", async function
         }
     } catch (error) {
         swal("Lo sentimos!", `Error al conectar con el servidor: ${error}`, "error");
+
+    } finally {
+        $("#paymentModal").LoadingOverlay("hide");
     }
 });
 
@@ -288,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-function terminarVenta() {
+async function terminarVenta(cardType, cardNumber, description) {
     const documentoCliente = $("#txtDocumentoCliente").val().trim();
     const nombreCliente = $("#txtNombreCliente").val().trim();
 
@@ -316,6 +314,9 @@ function terminarVenta() {
         subTotal: $("#txtSubTotal").val(),
         impuestoTotal: $("#txtIGV").val(),
         total: $("#txtTotal").val(),
+        tipoTarjeta: cardType,
+        numeroTarjeta: cardNumber,
+        descripcion: description,
         DetalleVenta: vmDetalleVenta
     };
 
@@ -338,6 +339,16 @@ function terminarVenta() {
                 $("#txtDocumentoCliente").val("");
                 $("#txtNombreCliente").val("");
                 $("#cboTipoDocumentoVenta").val($("#cboTipoDocumentoVenta option:first").val());
+                $("#amount").val("");
+                $("#description").val("");
+                $("#cardNumber").val("");
+                $("#cardType").val($("#cardType option:first").val());
+                $("#cardholderName").val("");
+                $("#expirationMonth").val("");
+                $("#expirationYear").val("");
+                $("#securityCode").val("");
+                $("#email").val("");
+
 
                 swal("Registrado!", `Numero Venta : ${responseJson.objeto.numeroVenta}`, "success");
                 $("#paymentModal").modal("hide")
@@ -349,7 +360,6 @@ function terminarVenta() {
         })
         .catch(error => {
             $("#btnTerminarVenta").LoadingOverlay("hide");
-            console.error("Error al registrar la venta:", error);
             swal("Error", "Hubo un problema al procesar la venta", "error");
             $("#paymentModal").modal("hide")
         });

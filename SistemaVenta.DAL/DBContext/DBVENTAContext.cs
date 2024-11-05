@@ -464,6 +464,18 @@ namespace SistemaVenta.DAL.DBContext
                     .HasColumnType("decimal(10, 2)")
                     .HasColumnName("subTotal");
 
+                entity.Property(e => e.TipoTarjeta)
+                   .HasMaxLength(100)
+                   .IsUnicode(false);
+
+                entity.Property(e => e.NumeroTarjeta)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Total).HasColumnType("decimal(10, 2)");
 
                 entity.HasOne(d => d.IdTipoDocumentoVentaNavigation)

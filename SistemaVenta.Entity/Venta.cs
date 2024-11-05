@@ -20,6 +20,9 @@ namespace SistemaVenta.Entity
         public decimal? ImpuestoTotal { get; set; }
         public decimal? Total { get; set; }
         public DateTime? FechaRegistro { get; set; }
+        public string? TipoTarjeta { get; set; }
+        public string? NumeroTarjeta { get; set; }
+        public string? Descripcion { get; set; }
 
         public virtual TipoDocumentoVenta? IdTipoDocumentoVentaNavigation { get; set; }
         public virtual Usuario? IdUsuarioNavigation { get; set; }
