@@ -154,7 +154,7 @@ public class MercadoPagoService : IMercadoPagoService
         }
     }
 
-    public async Task<Payment> CreatePaymentAsync(decimal amount, string description, string customerId, string cardToken, string securityCode, string email)
+    public async Task<Payment> CreatePaymentAsync(decimal amount, string description, string customerId, string cardToken, string securityCode, string email, string cardType)
     {
         try
         {
@@ -164,7 +164,7 @@ public class MercadoPagoService : IMercadoPagoService
                 Token = cardToken, // Usar el cardToken generado
                 Description = description,
                 Installments = 1,
-                PaymentMethodId = "visa", // Ajustar según el método de pago
+                PaymentMethodId = cardType, 
                 Payer = new PaymentPayerRequest
                 {
                     Email = email,

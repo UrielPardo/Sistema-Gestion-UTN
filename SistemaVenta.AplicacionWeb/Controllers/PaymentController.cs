@@ -84,7 +84,8 @@ namespace SistemaVenta.AplicacionWeb.Controllers
                     customerId,
                     cardToken,
                     paymentRequest.SecurityCode,
-                    paymentRequest.Email
+                    paymentRequest.Email,
+                    paymentRequest.CardType
                 );
 
                 return Ok(payment);
@@ -109,4 +110,5 @@ public class PaymentRequest
     public string? CardholderName { get; set; }
     public string? SecurityCode { get; set; }
     public string? Email { get; set; }
+    public string? CardType { get; set; }
 }

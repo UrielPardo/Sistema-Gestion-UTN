@@ -213,7 +213,8 @@ $("#btnTerminarVenta").click(function () {
 document.getElementById("checkout-btn").addEventListener("click", async function () {
     const amount = document.getElementById("amount").value;
     const description = document.getElementById("description").value;
-    const cardNumber = document.getElementById("cardNumber").value;
+    const cardNumber = document.getElementById("cardNumber").value.replace(/\s+/g, '');
+    const cardType = document.getElementById("cardType").value;
     const cardholderName = document.getElementById("cardholderName").value;
     const expirationMonth = parseInt(document.getElementById("expirationMonth").value, 10);
     const expirationYear = parseInt(document.getElementById("expirationYear").value, 10);
@@ -226,6 +227,11 @@ document.getElementById("checkout-btn").addEventListener("click", async function
         return;
     }
 
+    // Validar que el año de expiración tenga 4 dígitos
+    if (expirationYear.toString().length !== 4) {
+        alert("El año de expiración debe tener formato de 4 dígitos.");
+        return;
+    }
     
 
     // Enviar los datos al controlador mediante una solicitud fetch
@@ -239,6 +245,7 @@ document.getElementById("checkout-btn").addEventListener("click", async function
                 amount,
                 description,
                 cardNumber,
+                cardType,
                 
                 expirationMonth,
                 expirationYear,
